@@ -15,7 +15,7 @@ one) to recover from downtime quickly. (See the docs for `NewFrom()` for caveats
 
 ### Installation
 
-`go get github.com/patrickmn/go-cache`
+`go get https://github.com/shinwing/go-cache.git`
 
 ### Usage
 

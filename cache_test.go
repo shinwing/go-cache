@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io/ioutil"
 	"runtime"
+	"sort"
 	"strconv"
 	"sync"
 	"testing"
@@ -65,6 +66,26 @@ func TestCache(t *testing.T) {
 		t.Error("x for c is nil")
 	} else if c2 := x.(float64); c2+1.2 != 4.7 {
 		t.Error("c2 (which should be 3.5) plus 1.2 does not equal 4.7; value:", c2)
+	}
+}
+
+func TestCacheKeys(t *testing.T) {
+	tc := New(DefaultExpiration, 0)
+
+	tc.Set("a", 1, DefaultExpiration)
+	tc.Set("b", 2, DefaultExpiration)
+	tc.Set("c", 3, DefaultExpiration)
+
+	keys := tc.Keys()
+
+	if len(keys) != 3 {
+		t.Error("invalid number of cache keys received")
+	}
+
+	keys = sort.StringSlice(keys)
+
+	if keys[0] != "a" || keys[1] != "b" || keys[2] != "c" {
+		t.Error("invalid cache keys received")
 	}
 }
 

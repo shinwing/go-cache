@@ -117,6 +117,15 @@ func (sc *shardedCache) Items() []map[string]Item {
 	return res
 }
 
+// Keys returns a slice of all the keys in the cache.
+func (sc *shardedCache) Keys() []string {
+	keys := make([]string, 0)
+	for _, v := range sc.cs {
+		keys = append(keys, v.Keys()...)
+	}
+	return keys
+}
+
 func (sc *shardedCache) Flush() {
 	for _, v := range sc.cs {
 		v.Flush()
